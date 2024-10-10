@@ -1,0 +1,59 @@
+<%- include('../components/Template') %>
+
+    <!-- First Screen: Upload Image -->
+    <div id="upload-section">
+        <h2 style="margin-bottom: 0px;">อัปโหลดรูปเห็ดของคุณ</h2>
+        <p style="color: #666; text-align: left">Support png, jpg files</p>
+        <form action="/uploads" method="POST" enctype="multipart/form-data">
+            <label class="custom-file-upload" id="uploadContainer">
+                <input type="file" name="image" id="fileInput" accept=".jpg, .jpeg, .png" style="display: none;">
+                <i class="fas fa-camera icon"></i>
+                <div class="text">Upload Your Image here</div>
+                <img id="previewImage" src="" style="display: none;"> <!-- Hide image initially -->
+            </label>
+            <button type="button" id="upload-button" class="btn btn-secondary mt-3"
+                style="width: 100%;">เลือกรูปภาพ</button>
+            <button type="submit" id="generate-button" class="btn btn-secondary mt-1" style="width: 100%;"
+                disabled>เริ่มวิเคราะห์</button>
+        </form>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const previewImage = document.getElementById('previewImage');
+        const icon = document.querySelector('.icon');
+        const text = document.querySelector('.text');
+        const uploadButton = document.getElementById('upload-button');
+        const generateButton = document.getElementById('generate-button');
+
+        // เมื่อกดปุ่มเลือกภาพ
+        uploadButton.addEventListener('click', function () {
+            fileInput.click(); // เรียกใช้ input file
+        });
+
+        // เมื่อมีการเปลี่ยนแปลงไฟล์ใน input
+        fileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0]; // ดึงไฟล์ที่อัพโหลด
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // แสดงรูปในกรอบ
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+
+                    // ซ่อนไอคอนเมื่อมีรูป
+                    icon.style.display = 'none';
+                    text.style.display = 'none';
+                    generateButton.disabled = false; // เปิดใช้งานปุ่มเริ่มวิเคราะห์
+
+                    // เปลี่ยนข้อความและคลาสปุ่ม
+                    uploadButton.innerText = 'เปลี่ยนรูปภาพ';
+                    uploadButton.classList.remove('btn-secondary');
+                    uploadButton.classList.add('btn-outline-secondary'); // เปลี่ยนคลาสเป็น btn-outline-secondary
+                };
+
+                reader.readAsDataURL(file); // อ่านไฟล์รูปภาพที่ถูกเลือก
+            }
+        });
+    </script>

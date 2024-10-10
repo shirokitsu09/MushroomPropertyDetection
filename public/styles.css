@@ -1,0 +1,247 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+#upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* จัดแนวกลางในแนวนอน */
+  justify-content: center;
+  /* จัดแนวกลางในแนวตั้ง */
+  height: 100vh;
+  /* ทำให้พื้นที่เต็มหน้าจอ */
+}
+
+.custom-file-container {
+  display: flex;
+  justify-content: center;
+  /* จัดแนวกลางในแนวนอน */
+  margin-bottom: 20px;
+  /* เพิ่มระยะห่างด้านล่าง */
+}
+
+/* เพิ่ม CSS สำหรับปุ่ม outline */
+.btn-outline-secondary {
+  background-color: transparent;
+  color: #6c757d;
+  border: 1px solid #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
+}
+
+.custom-file-upload {
+  width: 250px;
+  height: 250px;
+  border: 2px dashed #ccc;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  /* ซ่อนส่วนเกิน */
+}
+
+.custom-file-upload img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* ปรับขนาดรูปให้เต็มกรอบ */
+  display: none;
+  /* ซ่อนรูปไว้ก่อน */
+  border-radius: 10px;
+  /* ทำให้รูปมุมมน */
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+  /* ซ่อน input ที่แท้จริง */
+}
+
+.icon {
+  font-size: 40px;
+  color: #aaa;
+}
+
+.text {
+  color: #aaa;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+button:disabled {
+  background-color: #ccc;
+}
+
+/* Mushroom Details Section */
+#mushroom-details-section {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Edibility Status */
+#edibility-status {
+  font-size: 40px;
+  font-weight: bold;
+  color: #4CAF50;
+  /* สีเขียว */
+  margin-bottom: 20px;
+}
+
+/* Mushroom Image */
+#mushroom-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#mushroom-image {
+  width: 220px;
+  height: 220px;
+  border-radius: 10px;
+  background-color: #e0e0e0;
+  /* สีเทาอ่อนสำหรับกรอบรูป */
+}
+
+/* Mushroom Info */
+#mushroom-info h2 {
+  margin: 10px 0 5px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#mushroom-info p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+  text-align: left;
+}
+
+#mushroom-info .scientific-name {
+  font-style: italic;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Benefits List */
+#mushroom-info ul {
+  text-align: left;
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+#mushroom-info ul li {
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+/* Back Button */
+#back-button-container {
+  margin-top: 20px;
+}
+
+#back-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #666;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#back-button:hover {
+  background-color: #333;
+}
+
+/* Modal for 'ไม่พบเห็ด' */
+.modal {
+  max-width: 350px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+}
+
+.modal h1 {
+  font-size: 30px;
+  color: black;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.modal img {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
+}
+
+.modal p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.modal p strong {
+  font-weight: bold;
+  color: black;
+}
+
+#confirm-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#confirm-button:hover {
+  background-color: #333;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
