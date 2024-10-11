@@ -2,56 +2,53 @@
 
     <!-- Mushroom Details Page -->
     <div id="mushroom-details-section">
-        <h1 id="edibility-status" style="color: green; text-align: center;">กินได้!</h1>
+        <% if (result.canEat === 'yes') { %>
+            <h1 id="edibility-status" style="color: green; text-align: center;">กินได้!</h1>
+        <% } else if (result.canEat === 'no') { %>
+            <h1 id="edibility-status" style="color: #FF3300; text-align: center;">กินไม่ได้!</h1>
+        <% } else if (result.canEat === 'cautious') { %>
+            <h1 id="edibility-status" style="color: #FFA500; text-align: center; margin-bottom: 0;">กินได้</h1>
+            <h1 style="color: #FFA500; text-align: center; font-weight: bold;">แต่ควรระวัง!</h1>
+        <% } %>
 
         <div id="mushroom-image-container" style="text-align: center;">
-            <img id="mushroom-image" src="/path" alt="Mushroom Image"
+            <img id="mushroom-image" src="../../uploads/<%= result.file %>" alt="Mushroom Image"
                 style="width: 150px; height: 150px; border: 1px solid #ccc; background-color: #f0f0f0;">
         </div>
 
         <div id="mushroom-info" class="p-2">
-            <h2>เห็ดคลินจือเฮมล็อก</h2>
-            <div style="font-style: italic; color: gray;">Hemlock reishi mushroom</div>
+            <h2><%= result.engName %></h2>
+            <div style="font-style: italic; color: gray;"><%= result.thName %></div>
 
-            <p><strong>ชื่อวิทยาศาสตร์:</strong><br> ganoderma tsugae</p>
-            <p><strong>แหล่งที่พบ:</strong><br> ในป่าที่มีต้นเฮมล็อก (Tsuga) ในอเมริกาเหนือและบางส่วนของเอเชีย Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad veniam rem, aspernatur a minima atque, facilis nesciunt excepturi non mollitia nostrum molestias, ratione alias inventore! Eos quisquam at corrupti iusto?</p>
-            <p><strong>การดูแล:</strong><br> ควรทำให้แห้ง หรือถนอมเป็นยา เพื่อช่วยย่อยหรือรับประทานดิบควรทำให้แห้ง หรือถนอมเป็นยา เพื่อช่วยย่อยหรือรับประทานดิบควรทำให้แห้ง หรือถนอมเป็นยา เพื่อช่วยย่อยหรือรับประทานดิบควรทำให้แห้ง หรือถนอมเป็นยา เพื่อช่วยย่อยหรือรับประทานดิบ</p>
+            <p><strong>ชื่อวิทยาศาสตร์ :</strong><br>&nbsp<%= result.sciName %></p>
+            <p><strong>แหล่งที่พบ :</strong><br>&nbsp<%= result.foundAt %></p>
+            
+            <% if (result.canEat === 'yes') { %>
+                <p><strong>การปรุง :</strong><br>&nbsp<%= result.preparation %></p>
+            <% } else if (result.canEat === 'no') { %>
+                <p><strong>สาเหตุที่กินไม่ได้ :</strong><br>&nbsp<%= result.reasonToNotEat %></p>
+            <% } else if (result.canEat === 'cautious') { %>
+                <p><strong>การปรุง :</strong><br>&nbsp<%= result.preparation %></p>
+                <p><strong>สาเหตุที่ควรระวัง :</strong><br>&nbsp<%= result.reasonToNotEat %></p>
+            <% } %>
             <p><strong>ประโยชน์:</strong></p>
+            
+            <% 
+                // แปลงสตริงให้ถูกต้องก่อนการแปลงเป็นอาร์เรย์
+                const formattedBenefits = result.benefit.replace(/'/g, '"'); // เปลี่ยน ' เป็น "
+                const benefitsArray = JSON.parse(formattedBenefits); // แปลงเป็นอาร์เรย์
+            %>
             <ul>
-                <li>เสริมสร้างภูมิคุ้มกัน</li>
-                <li>ลดอาการอักเสบ</li>
-                <li>มีสารต้านอนุมูลอิสระ</li>
+                <% benefitsArray.forEach((benefit) => { %>
+                    <li><%= benefit %></li>
+                <% }) %>
             </ul>
 
-            <!-- <p>ชื่อวิทยาศาสตร์:</p>
-            <p>ganoderma tsugae</p>
-            <ul>
-                <li>เสริมสร้างภูมิคุ้มกัน</li>
-                <li>ลดอาการอักเสบ</li>
-                <li>มีสารต้านอนุมูลอิสระ</li>
-            </ul> -->
-
-            <!-- <titles>ชื่อวิทยาศาสตร์:</titles>
-            <contents>ganoderma tsugae</contents>
-            <br>
-            <titles>แหล่งที่พบ:</titles>
-            <contents>ในป่าที่มีต้นเฮมล็อก (Tsuga) ในอเมริกาเหนือและบางส่วนของเอเชีย</contents>
-            <br>
-            <titles>การดูแล:</titles>
-            <contents>ควรทำให้แห้ง หรือถนอมเป็นยา เพื่อช่วยย่อยหรือรับประทานดิบ</contents>
-            <br>
-            <titles>ประโยชน์:</titles>
-            <ul>
-                <li>เสริมสร้างภูมิคุ้มกัน</li>
-                <li>ลดอาการอักเสบ</li>
-                <li>มีสารต้านอนุมูลอิสระ</li>
-            </ul>
-            <br> -->
         </div>
 
         <div id="back-button-container" style="text-align: center;">
-            <button id="back-button" class="btn btn-secondary"
-                style="width: 100%; padding: 10px;">กลับไปหน้าหลัก</button>
+            <button id="back-button" class="btn btn-secondary" onclick="deleteImage('<%= result.file %>')"
+                style="width: 100%; padding: 10px; margin-bottom: 20px;">กลับไปหน้าหลัก</button>
         </div>
     </div>
 
@@ -60,4 +57,17 @@
         document.getElementById('back-button').addEventListener('click', function () {
             window.location.href = '/'; // ลิงค์กลับไปยังหน้าหลัก
         });
+
+
+        function deleteImage(imageId) {
+            fetch(`/delete-image/${imageId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .catch(error => {
+                console.error('เกิดข้อผิดพลาด:', error);
+            });
+        }
     </script>
