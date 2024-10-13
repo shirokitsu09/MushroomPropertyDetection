@@ -83,7 +83,7 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
         res.redirect('/loading');
 
         try {
-            const response = await axios.post('https://6061-18-233-224-152.ngrok-free.app/predict', formData)
+            const response = await axios.post('https://4b81-18-233-224-152.ngrok-free.app/predict/', formData)
             const demo = response.data.predicted_class
 
             let result = await mushroomDb.findOne({ sciName: demo })
