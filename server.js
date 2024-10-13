@@ -64,13 +64,13 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
         formData.append('hello', fs.createReadStream(filePath));
 
         try {
-            // const response = await axios.post('https://958d-34-106-224-76.ngrok-free.app/predict', formData)
+            const response = await axios.post('https://6061-18-233-224-152.ngrok-free.app/predict/', formData)
             // return res.status(200).send(response.data.predicted_class);
-            // response.data.predicted_class
+            const demo = response.data.predicted_class
 
             // demo = 'Lactarius indigo' // กินได้
             // demo = 'Psilocybe cubensis' // กินไม่ได้
-            demo = 'Stropharia ambigua' // ควรระวัง
+            // demo = 'Stropharia ambigua' // ควรระวัง
             // return res.status(200).send(demo);
             let result = await mushroomDb.findOne({ sciName: demo })
             result.file = file.filename
