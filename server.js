@@ -14,25 +14,12 @@ connectDB();
 const mushroomDb = require('./model');
 const { default: axios } = require('axios');
 
-
-const randomMush = async (req, res) => {
-    const data = await mushroomDb.find()
-
-    const randomIndex = Math.floor(Math.random() * data.length); // Generate a random index
-    const randomMushroom = data[randomIndex];
-
-    return res.json({
-        data: randomMushroom
-    })
-}
-
-// ตั้งค่าที่เก็บไฟล์อัปโหลด
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // บันทึกไฟล์ในโฟลเดอร์ 'uploads'
+        cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname); // ชื่อไฟล์ = เวลา + ชื่อไฟล์เดิม
+        cb(null, Date.now() + '-' + file.originalname);
     }
 });
 
@@ -42,14 +29,44 @@ app.get('/', (req, res) => {
     res.render('pages/index')
 })
 
-app.get('/result', (req, res) => {
-    res.render('pages/result', {
-
-    })
-})
-
 const FormData = require('form-data');
 const fs = require('fs');
+//     try {
+//         const file = req.file;
+
+//         if (!file) {
+//             console.log('No file uploaded');
+//             return res.status(400).send({ message: 'No file uploaded' });
+//         }
+//         const formData = new FormData();
+//         const filePath = path.join(__dirname, file.path);
+//         formData.append('hello', fs.createReadStream(filePath));
+
+//         try {
+//             // const response = await axios.post('https://958d-34-106-224-76.ngrok-free.app/predict', formData)
+//             // return res.status(200).send(response.data.predicted_class);
+//             // response.data.predicted_class
+
+//             // demo = 'Lactarius indigo' // กินได้
+//             // demo = 'Psilocybe cubensis' // กินไม่ได้
+//             demo = 'Stropharia ambigua' // ควรระวัง
+//             // return res.status(200).send(demo);
+//             let result = await mushroomDb.findOne({ sciName: demo })
+//             result.file = file.filename
+//             // return res.send({ message: result})
+//             // response to interface
+//             // res.send({ message:result})
+//             res.render('pages/result', {
+//                 result: result,
+//             })
+//         } catch (err) {
+//             throw new err
+//         }
+
+//     } catch (e) {
+//         console.error(e.message);
+//     }
+// });
 
 app.post('/uploads', upload.single('image'), async (req, res) => {
     try {
@@ -63,24 +80,17 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
         const filePath = path.join(__dirname, file.path);
         formData.append('hello', fs.createReadStream(filePath));
 
+        res.redirect('/loading');
+
         try {
-            const response = await axios.post('https://6061-18-233-224-152.ngrok-free.app/predict/', formData)
-            // return res.status(200).send(response.data.predicted_class);
+            const response = await axios.post('https://6061-18-233-224-152.ngrok-free.app/predict', formData)
             const demo = response.data.predicted_class
 
-            // demo = 'Lactarius indigo' // กินได้
-            // demo = 'Psilocybe cubensis' // กินไม่ได้
-            // demo = 'Stropharia ambigua' // ควรระวัง
-            // return res.status(200).send(demo);
             let result = await mushroomDb.findOne({ sciName: demo })
             result.file = file.filename
-            // return res.send({ message: result})
-            // response to interface
-            // res.send({ message:result})
-            
-            res.render('pages/result', {
-                result: result,
-            })
+
+            global.processingResult = result;
+
         } catch (err) {
             throw new err
         }
@@ -88,6 +98,29 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
     } catch (e) {
         console.error(e.message);
     }
+});
+
+app.get('/check-status', (req, res) => {
+    if (global.processingResult) {
+        return res.send({ completed: true });
+    }
+    res.send({ completed: false });
+});
+
+app.get('/result', (req, res) => {
+    if (global.processingResult) {
+        res.render('pages/result', {
+            result: global.processingResult,
+        });
+
+        global.processingResult = null;
+    } else {
+        res.redirect('/');
+    }
+});
+
+app.get('/loading', (req, res) => {
+    res.render('pages/loading');
 });
 
 app.delete('/delete-image/:id', async (req, res) => {
@@ -104,7 +137,7 @@ app.delete('/delete-image/:id', async (req, res) => {
             const updateImageCache = (filePath) => {
                 const index = imageCache.indexOf(filePath);
                 if (index > -1) {
-                    imageCache.splice(index, 1); // Remove the image path from cache
+                    imageCache.splice(index, 1);
                 }
             };
             updateImageCache(filePath);

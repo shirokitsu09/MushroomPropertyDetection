@@ -1,1 +1,74 @@
-<h1>hi</h1>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>กำลังวิเคราะห์รูปภาพ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 26px;
+            color: black;
+            margin-bottom: 0;
+        }
+
+        p {
+            font-size: 16px;
+            color: gray;
+            margin-bottom: 20px;
+        }
+
+        .loading-images {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+
+        .loading-images img {
+            width: 80px;
+            height: auto;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>กำลังวิเคราะห์รูปภาพ</h1>
+    <p>รอสักครู่...</p>
+
+    <div class="loading-images">
+        <img src="../../uploads/image1.jpg" alt="Character 1">
+        <img src="../../uploads/image2.jpg" alt="Character 2">
+        <img src="../../uploads/image3.jpg" alt="Character 3">
+    </div>
+
+    <script>
+        
+        setInterval(async function () {
+            try {
+                const response = await fetch('/check-status'); 
+                const data = await response.json();
+
+                if (data.completed) {
+                    window.location.href = '/result'; 
+                }
+            } catch (error) {
+                console.error('เกิดข้อผิดพลาด:', error);
+            }
+        }, 1000); 
+    </script>
+
+</body>
+</html>
