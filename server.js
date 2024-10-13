@@ -77,6 +77,7 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
             // return res.send({ message: result})
             // response to interface
             // res.send({ message:result})
+            
             res.render('pages/result', {
                 result: result,
             })
