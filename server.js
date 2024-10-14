@@ -31,42 +31,6 @@ app.get('/', (req, res) => {
 
 const FormData = require('form-data');
 const fs = require('fs');
-//     try {
-//         const file = req.file;
-
-//         if (!file) {
-//             console.log('No file uploaded');
-//             return res.status(400).send({ message: 'No file uploaded' });
-//         }
-//         const formData = new FormData();
-//         const filePath = path.join(__dirname, file.path);
-//         formData.append('hello', fs.createReadStream(filePath));
-
-//         try {
-//             // const response = await axios.post('https://958d-34-106-224-76.ngrok-free.app/predict', formData)
-//             // return res.status(200).send(response.data.predicted_class);
-//             // response.data.predicted_class
-
-//             // demo = 'Lactarius indigo' // กินได้
-//             // demo = 'Psilocybe cubensis' // กินไม่ได้
-//             demo = 'Stropharia ambigua' // ควรระวัง
-//             // return res.status(200).send(demo);
-//             let result = await mushroomDb.findOne({ sciName: demo })
-//             result.file = file.filename
-//             // return res.send({ message: result})
-//             // response to interface
-//             // res.send({ message:result})
-//             res.render('pages/result', {
-//                 result: result,
-//             })
-//         } catch (err) {
-//             throw new err
-//         }
-
-//     } catch (e) {
-//         console.error(e.message);
-//     }
-// });
 
 app.post('/uploads', upload.single('image'), async (req, res) => {
     try {
