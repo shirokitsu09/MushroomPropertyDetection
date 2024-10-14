@@ -74,6 +74,7 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
 
         if (!file) {
             console.log('No file uploaded');
+            res.render('pages/index')
             return res.status(400).send({ message: 'No file uploaded' });
         }
         const formData = new FormData();

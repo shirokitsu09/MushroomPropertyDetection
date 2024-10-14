@@ -50,11 +50,23 @@
                     // เปลี่ยนข้อความและคลาสปุ่ม
                     uploadButton.innerText = 'เปลี่ยนรูปภาพ';
                     uploadButton.classList.remove('btn-secondary');
-                    uploadButton.classList.add('btn-outline-secondary'); // เปลี่ยนคลาสเป็น btn-outline-secondary
+                    uploadButton.classList.add('btn-outline-secondary');
                 };
 
                 reader.readAsDataURL(file); // อ่านไฟล์รูปภาพที่ถูกเลือก
-                console.log(file)
+            } else {
+                // ถ้าไม่มีไฟล์ใหม่ที่ถูกเลือก ให้รีเซ็ตสถานะของการแสดงผล
+                previewImage.src = '';
+                previewImage.style.display = 'none';
+                icon.style.display = 'block';
+                text.style.display = 'block';
+                generateButton.disabled = true;
+
+                // รีเซ็ตข้อความและคลาสของปุ่ม
+                uploadButton.innerText = 'เลือกรูปภาพ';
+                uploadButton.classList.remove('btn-outline-secondary');
+                uploadButton.classList.add('btn-secondary');
             }
         });
+
     </script>
