@@ -183,43 +183,85 @@ button:disabled {
   background-color: #333;
 }
 
-/* Modal for 'ไม่พบเห็ด' */
-.modal {
-  max-width: 350px;
-  background-color: white;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
+/* Additional Styling */
+
+/* Hide Modal by default */
+.modal,
+#overlay {
+  display: none;
 }
 
+/* Show Modal */
+.modal.show,
+#overlay.show {
+  display: block;
+}
+
+/* Center modal in viewport */
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles for Mushroom Details Section */
+#mushroom-details-section {
+  padding: 20px 30px;
+}
+
+/* Additional Button Styling */
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Adjusted padding for modal content */
+.modal p {
+  padding: 0 10px;
+}
+
+/* Specific styles for the "ไม่พบเห็ด" message */
 .modal h1 {
-  font-size: 30px;
-  color: black;
-  margin-bottom: 20px;
-  font-weight: bold;
+  font-family: "Arial Black", sans-serif;
+  color: #d9534f;
+  /* dark red for warning */
 }
 
 .modal img {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  padding: 5px;
 }
 
-.modal p {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 10px;
+/* Dark overlay when modal is active */
+#overlay {
+  background: rgba(0, 0, 0, 0.6);
 }
 
-.modal p strong {
-  font-weight: bold;
-  color: black;
+/* Back button hover effect with slight shadow */
+#back-button:hover {
+  background-color: #555;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Adjusting button sizes for better UX */
+button {
+  padding: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modal {
+    width: 90%;
+  }
+
+  #mushroom-info h2 {
+    font-size: 24px;
+  }
+
+  .modal h1 {
+    font-size: 24px;
+  }
 }
 
 #confirm-button {

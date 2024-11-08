@@ -1,10 +1,93 @@
-<%- include('/Template') %>
+<!DOCTYPE html>
+<html lang="th">
 
-    <div id="overlay"></div>
-    <div class="modal" id="modal">
-        <h1>ไม่พบเห็ด</h1>
-        <img src="your-image-path.png" alt="ไม่พบเห็ด">
-        <p><strong>ขออภัย</strong> เราไม่พบเห็ดในรูปภาพ</p>
-        <p>โปรดตรวจสอบว่ารูปภาพมีเห็ดและมีขนาดมากกว่า <strong>120x120 px</strong></p>
-        <button id="confirm-button">รับทราบ</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ไม่พบเห็ด</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #e0e0e0;
+        }
+
+        .modal {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 300px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .modal img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        .modal h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .modal p strong {
+            font-weight: bold;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="modal">
+        <h2>ไม่พบเห็ด</h2>
+        <img src="../../uploads/image4.jpg" alt="Mushroom Image">
+        <p>ขออภัย เราไม่พบเห็ดในรูปภาพ<br>โปรดตรวจสอบว่าในรูปภาพมีเห็ด</strong>
+        </p>
+        <button class="button" id="back-button">รับทราบ</button>
     </div>
+
+    <script>
+        document.getElementById('back-button').addEventListener('click', function () {
+            window.location.href = '/';
+        });
+    </script>
+
+</body>
+
+</html>
