@@ -49,19 +49,26 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
 
         try {
             const response = await axios.post('https://4b81-18-233-224-152.ngrok-free.app/predict/', formData)
-            // const demo = response.data.predicted_class
-            const demo = "undefined"
-            // console.log(typeof(demo))
+            const demo = response.data.predicted_class
+            // const demo = "undefine"
+            console.log('Response:' + demo)
             if (demo === "undefined") {
-                console.log(1)
                 global.processingResult = "undefined";
                 console.log(global.processingResult)
             } else {
-                let result = await mushroomDb.findOne({ sciName: demo })
-                result.file = file.filename
+                try {
+                    let result = await mushroomDb.findOne({ sciName: demo })
+                    if (result !== null) {
+                        result.file = file.filename
 
-                global.processingResult = result;
-                console.log(global.processingResult)
+                        global.processingResult = result;
+                        console.log(global.processingResult)
+                    } else {
+                        global.processingResult = "undefined";
+                    }
+                } catch (error) {
+                    throw error
+                }
             }
 
         } catch (err) {
