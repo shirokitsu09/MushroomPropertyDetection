@@ -48,9 +48,9 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
         res.redirect('/loading');
 
         try {
-            const response = await axios.post('https://4b81-18-233-224-152.ngrok-free.app/predict/', formData)
+            const response = await axios.post('https://7217-18-233-224-152.ngrok-free.app/predict/', formData)
             const demo = response.data.predicted_class
-            // const demo = "undefine"
+            // const demo = "undefined"
             console.log('Response:' + demo)
             if (demo === "undefined") {
                 global.processingResult = "undefined";
@@ -88,13 +88,13 @@ app.get('/check-status', (req, res) => {
 });
 
 app.get('/result', (req, res) => {
-    if (global.processingResult != "undefined") {
+    if (global.processingResult && global.processingResult != "undefined") {
         res.render('pages/result', {
             result: global.processingResult,
         });
 
         global.processingResult = null;
-    } else if (global.processingResult === "undefined") {
+    } else if (global.processingResult && global.processingResult === "undefined") {
         res.render('components/badRequest');
     } else {
         res.redirect('/');
